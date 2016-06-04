@@ -1,6 +1,10 @@
+<<<<<<< HEAD
 
 # Online Python Tutor extension for the IPython shell
 
+=======
+## Online Python Tutor extension for the IPython shell
+>>>>>>> a466a5a84450eabc857202489401a61fa18ef904
 by Philip Guo  
 August 2013
 
@@ -38,6 +42,11 @@ One-minute video demo:
     ```shell
     $ python opt/server/opt-ipy-server.py
     ```
+<<<<<<< HEAD
+=======
+
+3. Load this URL in your browser:
+>>>>>>> a466a5a84450eabc857202489401a61fa18ef904
 
 3. Load this URL in your browser: `http://localhost:8888/`
 
@@ -46,6 +55,11 @@ One-minute video demo:
     ```shell
     $ ipython
     ```
+<<<<<<< HEAD
+=======
+
+5. Load this extension by running:
+>>>>>>> a466a5a84450eabc857202489401a61fa18ef904
 
 5. Load this extension by running: `%load_ext opt-ipy`
 
