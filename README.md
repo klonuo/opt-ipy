@@ -34,7 +34,7 @@ $ git clone https://github.com/klonuo/opt-ipy
 $ cd opt-ipy
 ```
 
-Then start the IPython shell in this directory by running:
+then start the IPython shell in this directory by running:
 
 ```shell
 $ ipython
