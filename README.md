@@ -1,9 +1,9 @@
 # Online Python Tutor extension for the IPython shell
 
-    [Introduction](#introduction)  
-    [Prerequisites](#prerequisites)  
-    [Instructions](#instructions)  
-    [Changes](#changes)  
+[Introduction](#introduction)  
+[Prerequisites](#prerequisites)  
+[Instructions](#instructions)  
+[Changes](#changes)  
 
 ---
 
