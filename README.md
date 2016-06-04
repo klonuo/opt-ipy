@@ -6,7 +6,8 @@
 [Changes](#changes)  
 
 ---
-
+  
+  
 ### Introduction
 
 When this extension is loaded, you can type code into the IPython prompt and visualize its execution in a web browser.
@@ -15,14 +16,14 @@ This extension also defines a `%clear` magic command to clear the user's global 
 
 One-minute video demo:
 [![Online Python Tutor + IPython shell](http://img.youtube.com/vi/Q3oarDuZPL0/0.jpg)](http://www.youtube.com/watch?v=Q3oarDuZPL0)
-
-
+  
+  
 ### Prerequisites:
 
  - IPython shell (http://ipython.org)
  - Tornado Web server (http://www.tornadoweb.org)
-
-
+  
+  
 ### Instructions:
 
 Clone this repo:
@@ -47,8 +48,8 @@ and load the extension and start server by running:
     ```
 
 At this point, as soon as you execute a Python statement in the IPython shell, it should immediately be visualized in your browser.
-
-
+  
+  
 ### Changes
 
  - restructure files from [OPT](https://github.com/pgbovine/OnlinePythonTutor) repo related to OPT IPython extension
