@@ -48,7 +48,7 @@ class WholeTraceHandler(tornado.web.RequestHandler):
         dat = json.loads(message.decode())
         Application.current_full_trace = dat
 
-        js_msg=dict(payload=Application.current_full_trace, type='wholetrace')
+        js_msg = dict(payload=Application.current_full_trace, type='wholetrace')
         ChatSocketHandler.send_updates(json.dumps(js_msg))
 
 
@@ -62,7 +62,7 @@ class DiffTraceHandler(tornado.web.RequestHandler):
 class ClearHandler(tornado.web.RequestHandler):
     def post(self):
         Application.current_full_trace = None
-        js_msg=dict(type='clear')
+        js_msg = dict(type='clear')
         ChatSocketHandler.send_updates(json.dumps(js_msg))
 
 
@@ -78,7 +78,7 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
         # when a new connection is made, send the entire trace to only
         # THIS browser
         if Application.current_full_trace:
-            js_msg=dict(payload=Application.current_full_trace, type='wholetrace')
+            js_msg = dict(payload=Application.current_full_trace, type='wholetrace')
             self.write_message(json.dumps(js_msg))
 
     def on_close(self):
@@ -86,7 +86,7 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
 
     @classmethod
     def send_updates(cls, chat):
-        #logging.info("sending message to %d waiters", len(cls.waiters))
+        # logging.info("sending message to %d waiters", len(cls.waiters))
         for waiter in cls.waiters:
             try:
                 waiter.write_message(chat)

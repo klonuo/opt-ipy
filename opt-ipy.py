@@ -1,27 +1,16 @@
-# If you're hosting the server remotely, then change this address:
-SERVER_ADDR = "http://localhost:8888/"
-
-assert SERVER_ADDR[-1] == '/'
-
-
-import sys, json
+import json
 from opt import pg_logger
 
-# TODO: use the 'six' library to smooth out py2 and py3 differences
-is_python3 = (sys.version_info[0] == 3)
-
-
-viewitems = None
-urlopen = None
-if is_python3:
+try:
+    from urllib2 import urlopen
+    viewitems = lambda x: x.iteritems()
+except ImportError:  # Python 3
     from urllib.request import urlopen
     viewitems = lambda x: x.items()
 
-else:
-    from urllib2 import urlopen
-    viewitems = lambda x: x.iteritems()
-
-
+# If you're hosting the server remotely, then change this address:
+SERVER_ADDR = "http://localhost:8888/"
+assert SERVER_ADDR[-1] == '/'
 
 # Standardize display of floats to 3 significant figures
 #
@@ -29,8 +18,8 @@ else:
 # http://stackoverflow.com/questions/1447287/format-floats-with-standard-json-module
 json.encoder.FLOAT_REPR = lambda f: ('%.3f' % f)
 
-#INDENT_LEVEL = 2   # human-readable
-INDENT_LEVEL = None # compact
+# INDENT_LEVEL = 2    # human-readable
+INDENT_LEVEL = None  # compact
 
 # TODO: support incremental pushes to the OPT frontend for efficiency
 # and better "snappiness"
@@ -56,13 +45,12 @@ class OptHistory(object):
         return '\n'.join(self.executed_stmts)
 
     def run_str_and_broadcast(self, stmt_str):
-        '''
-        Run stmt_str and transmit trace to server
-        '''
+        """Run stmt_str and transmit trace to server"""
+
         self.executed_stmts.append(stmt_str)
 
-        opt_trace = pg_logger.exec_script_str_local(self.get_code(), [], False, False,
-                                                    lambda cod, trace: trace)
+        opt_trace = pg_logger.exec_script_str_local(
+            self.get_code(), [], False, False, lambda cod, trace: trace)
 
         last_evt = opt_trace[-1]['event']
         if last_evt == 'exception':
@@ -96,7 +84,7 @@ def opt_pre_run_code_hook(self):
 
     if self.meta.last_cmd_index == last_cmd_index:
         assert self.meta.last_cmd == last_cmd
-        return # punt!!!
+        return  # punt!!!
 
     self.meta.last_cmd = last_cmd
     self.meta.last_cmd_index = last_cmd_index
@@ -119,9 +107,9 @@ def opt_clear(self, params):
     for k in filtered_user_ns:
         del ip.user_ns[k]
 
-    ip.meta.opt_history = OptHistory() # just create a new one!
+    ip.meta.opt_history = OptHistory()  # just create a new one!
 
-    urlopen(SERVER_ADDR + 'clear', 'blub'.encode()) # need a non-empty POST body
+    urlopen(SERVER_ADDR + 'clear', 'blub'.encode())  # need a non-empty POST body
 
 
 def load_ipython_extension(ipython):
@@ -132,7 +120,7 @@ def load_ipython_extension(ipython):
     ipython.meta.opt_history = OptHistory()
 
     ipython.meta.last_cmd = None
-    ipython.meta.last_cmd_index = -1 # set to an impossible initial value
+    ipython.meta.last_cmd_index = -1  # set to an impossible initial value
 
     # NB: spelling might be different in older IPython versions
     ipython.set_hook('pre_run_code_hook', opt_pre_run_code_hook)
