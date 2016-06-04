@@ -1,5 +1,5 @@
 ## Online Python Tutor extension for the IPython shell
-by Philip Guo (philip@pgbovine.net)
+by Philip Guo  
 August 2013
 
 
