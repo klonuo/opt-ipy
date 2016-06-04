@@ -1,4 +1,9 @@
+import atexit
 import json
+import os
+import subprocess
+import sys
+
 from opt import pg_logger
 
 try:
@@ -92,7 +97,6 @@ def opt_pre_run_code_hook(self):
     self.meta.opt_history.run_str_and_broadcast(last_cmd)
 
 
-# clear global namespace and reset history
 def opt_clear(self, params):
     ip = get_ipython()
 
@@ -111,24 +115,56 @@ def opt_clear(self, params):
 
     urlopen(SERVER_ADDR + 'clear', 'blub'.encode())  # need a non-empty POST body
 
+    print("\n\tExtension reset!")
 
-def load_ipython_extension(ipython):
+
+def run_server(self, params):
+
+    server = os.path.join(os.path.dirname(__file__),
+                          'opt/server/opt_ipy_server.py')
+
+    p = subprocess.Popen(['python', server], stderr=subprocess.DEVNULL)
+    atexit.register(lambda: p.terminate())
+
+    print("\n\tTornado server started!")
+
+    if sys.platform.startswith('darwin'):
+        subprocess.Popen(('open', SERVER_ADDR))
+    elif os.name == 'nt':
+        os.startfile(SERVER_ADDR)
+    elif os.name == 'posix':
+        subprocess.Popen(('xdg-open', SERVER_ADDR))
+
+
+def usage():
+    msg = """
+    Online Python Tutor extension loaded!
+
+    Additional commands:
+
+        %clear      - Clear global namespace and reset history
+        %run_server - Run tornado server and open default browser
+    """
+    return msg
+
+
+def load_ipython_extension(ip):
     # The `ipython` argument is the currently active `InteractiveShell`
     # instance, which can be used in any way. This allows you to register
     # new magics or aliases, for example.
 
-    ipython.meta.opt_history = OptHistory()
-
-    ipython.meta.last_cmd = None
-    ipython.meta.last_cmd_index = -1  # set to an impossible initial value
+    ip.meta.opt_history = OptHistory()
+    ip.meta.last_cmd = None
+    ip.meta.last_cmd_index = -1  # set to an impossible initial value
 
     # NB: spelling might be different in older IPython versions
-    ipython.set_hook('pre_run_code_hook', opt_pre_run_code_hook)
-    ipython.define_magic('clear', opt_clear)
+    ip.set_hook('pre_run_code_hook', opt_pre_run_code_hook)
+    ip.define_magic('run_server', run_server)
+    ip.define_magic('clear', opt_clear)
 
-    print("Online Python Tutor extension loaded!")
+    ip.write(usage())
 
 
-def unload_ipython_extension(ipython):
+def unload_ipython_extension(ip):
     # If you want your extension to be unloadable, put that logic here.
     pass

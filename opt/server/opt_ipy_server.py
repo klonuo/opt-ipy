@@ -39,7 +39,7 @@ class Application(tornado.web.Application):
 
 class MainHandler(tornado.web.RequestHandler):
     def get(self):
-        self.render("opt-ipy.html")
+        self.render("opt_ipy.html")
 
 
 class WholeTraceHandler(tornado.web.RequestHandler):
