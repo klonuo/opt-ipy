@@ -1,6 +1,7 @@
 import atexit
 import json
 import os
+import socket;
 import subprocess
 import sys
 
@@ -8,9 +9,11 @@ from opt import pg_logger
 
 try:
     from urllib2 import urlopen
+    from urlparse import urlparse
     viewitems = lambda x: x.iteritems()
 except ImportError:  # Python 3
     from urllib.request import urlopen
+    from urllib.parse import urlparse
     viewitems = lambda x: x.items()
 
 # If you're hosting the server remotely, then change this address:
@@ -98,7 +101,7 @@ def opt_pre_run_code_hook(self):
 
 
 def opt_clear(self, params):
-    ip = get_ipython()
+    ip = self.shell
 
     filtered_user_ns = set()
     for k, v in viewitems(ip.user_ns):
@@ -120,20 +123,36 @@ def opt_clear(self, params):
 
 def run_server(self, params):
 
+    try:
+        null = subprocess.DEVNULL
+    except:  # Python 2
+        null = open(os.devnull, 'w')
+
     server = os.path.join(os.path.dirname(__file__),
                           'opt/server/opt_ipy_server.py')
 
-    p = subprocess.Popen(['python', server], stderr=subprocess.DEVNULL)
+    p = subprocess.Popen([sys.executable, server], stderr=null)
     atexit.register(lambda: p.terminate())
 
-    print("\n\tTornado server started!")
+    sock = socket.socket()
+    addr = urlparse(SERVER_ADDR)
+    if not sock.connect_ex((addr.hostname, addr.port)):
+        sock.close()
 
-    if sys.platform.startswith('darwin'):
-        subprocess.Popen(('open', SERVER_ADDR))
-    elif os.name == 'nt':
-        os.startfile(SERVER_ADDR)
-    elif os.name == 'posix':
-        subprocess.Popen(('xdg-open', SERVER_ADDR))
+        print("\n\tTornado server started!")
+
+        if sys.platform.startswith('darwin'):
+            subprocess.Popen(('open', SERVER_ADDR))
+        elif os.name == 'nt':
+            os.startfile(SERVER_ADDR)
+        elif os.name == 'posix':
+            subprocess.Popen(('xdg-open', SERVER_ADDR))
+    else:
+        try:
+            import tornado
+            raise Exception('Server failed to start!')
+        except ImportError:
+            raise Exception('Tornado is required while it is not available!')
 
 
 def usage():
