@@ -1,13 +1,14 @@
-<<<<<<< HEAD
-
 # Online Python Tutor extension for the IPython shell
 
-=======
-## Online Python Tutor extension for the IPython shell
->>>>>>> a466a5a84450eabc857202489401a61fa18ef904
 by Philip Guo  
 August 2013
 
+
+### Note                                                              
+> Original project at: https://github.com/pgbovine/OnlinePythonTutor
+
+
+### Introduction
 
 When this extension is loaded, you can type code into the IPython prompt and visualize its execution in a web browser.
 
@@ -16,10 +17,6 @@ This extension also defines a `%clear` magic command to clear the user's global 
 One-minute video demo:
 
 [![Online Python Tutor + IPython shell](http://img.youtube.com/vi/Q3oarDuZPL0/0.jpg)](http://www.youtube.com/watch?v=Q3oarDuZPL0)
-
-
-### Note                                                              
-> Original project at: https://github.com/pgbovine/OnlinePythonTutor
 
 
 ### Prerequisites:
@@ -42,11 +39,6 @@ One-minute video demo:
     ```shell
     $ python opt/server/opt-ipy-server.py
     ```
-<<<<<<< HEAD
-=======
-
-3. Load this URL in your browser:
->>>>>>> a466a5a84450eabc857202489401a61fa18ef904
 
 3. Load this URL in your browser: `http://localhost:8888/`
 
@@ -55,11 +47,6 @@ One-minute video demo:
     ```shell
     $ ipython
     ```
-<<<<<<< HEAD
-=======
-
-5. Load this extension by running:
->>>>>>> a466a5a84450eabc857202489401a61fa18ef904
 
 5. Load this extension by running: `%load_ext opt-ipy`
 
