@@ -15,6 +15,7 @@ When this extension is loaded, you can type code into the IPython prompt and vis
 This extension also defines a `%clear` magic command to clear the user's global environment and accompanying visualization, and `%run_server` command to start tornado server and run default browser from within IPython
 
 One-minute video demo:
+
 [![Online Python Tutor + IPython shell](http://img.youtube.com/vi/Q3oarDuZPL0/0.jpg)](http://www.youtube.com/watch?v=Q3oarDuZPL0)
   
   
