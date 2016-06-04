@@ -29,24 +29,24 @@ One-minute video demo:
 
 Clone this repo:
     
-    ```shell
-    $ git clone https://github.com/klonuo/opt-ipy
-    $ cd opt-ipy
-    ```
+```shell
+$ git clone https://github.com/klonuo/opt-ipy
+$ cd opt-ipy
+```
 
 Then start the IPython shell in this directory by running:
 
-    ```shell
-    $ ipython
-    ```
+```shell
+$ ipython
+```
 
 and load the extension and start server by running: 
 
-    ```python
-    In[1]: %load_ext opt_ipy
+```python
+In[1]: %load_ext opt_ipy
 
-    In[2]: %run_server
-    ```
+In[2]: %run_server
+```
 
 At this point, as soon as you execute a Python statement in the IPython shell, it should immediately be visualized in your browser.
   
